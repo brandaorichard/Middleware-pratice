@@ -4,6 +4,7 @@ const logger = require('./middlewares/logger')
 
 const app = express()
 app.use(express.json())
+app.use(logger)
 
 const teams = [
   'ABC',
@@ -27,7 +28,7 @@ const createTeam = (req, res) => {
   return res.status(201).end(); // uso do end() para indiciar q nao queremos enviar nenhum corpo como resposta
 }
 // endpoint post
-app.post('/teams', logger, validateName, createTeam) // com a seguinte estrutura quando for feito uma requisicao para o endpoint em questao, primeiro ele bate no middleware de validacao e na sequencia CASO FOR VALIDADO ira dar continuidade e bater na proxima funcao q no caso eh a createTeam. Tambem efetuamos a chama da middleware para vizualizacao de requisicoes, chamamos antes de todos os outros middlewares e funcoes pois queremos o log de todas as reqs independente se deu certo ou nao
+app.post('/teams', validateName, createTeam) // com a seguinte estrutura quando for feito uma requisicao para o endpoint em questao, primeiro ele bate no middleware de validacao e na sequencia CASO FOR VALIDADO ira dar continuidade e bater na proxima funcao q no caso eh a createTeam. Tambem efetuamos a chama da middleware para visualizacao de requisicoes, chamamos antes de todos os outros middlewares e funcoes pois queremos o log de todas as reqs independente se deu certo ou nao
 
 app.listen(3000, () => {
   console.log('Xablau!!!');
